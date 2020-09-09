@@ -1,8 +1,9 @@
 package entities;
 
+import exceptions.DomainException;
 
 public class Account {
-    
+
     private Integer number;
     private String holder;
     private Double balance;
@@ -46,17 +47,25 @@ public class Account {
     public void setWithdrawLimit(Double withdrawLimit) {
         this.withdrawLimit = withdrawLimit;
     }
-    
-    public Double deposit (double amount){
-    
+
+    public Double deposit(double amount) {
+
         return balance += amount;
-        
+
     }
-    
-    public Double withdraw (double amount){
-    
+
+    public Double withdraw(double amount) throws DomainException {
+
+        if (amount > withdrawLimit) {
+            throw new DomainException ("The amount exceeds withdraw limit");
+        }
+        if (amount > balance){
+            
+            throw new DomainException ("Not enough balance");
+            
+        }
         return balance -= amount;
-        
+
     }
-    
+
 }
